@@ -1,0 +1,8 @@
+ctransformers
+flask
+sentence-transformers
+pinecone
+python-dotenv
+gunicorn
+flask-cors
+langchain
