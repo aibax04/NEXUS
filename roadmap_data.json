@@ -1,0 +1,16 @@
+{
+    "react": {
+        "title": "React Developer Roadmap",
+        "steps": [
+            {
+                "number": 1,
+                "title": "JavaScript Fundamentals",
+                "description": "Master core JavaScript concepts...",
+                "resources": [
+                    "JavaScript.info - Modern JavaScript Tutorial",
+                    "MDN Web Docs - JavaScript Guide"
+                ]
+            }
+        ]
+    }
+}
