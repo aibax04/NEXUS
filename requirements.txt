@@ -6,3 +6,8 @@ python-dotenv
 gunicorn
 flask-cors
 langchain
+
+transformers
+torch
+accelerate
+bitsandbytes

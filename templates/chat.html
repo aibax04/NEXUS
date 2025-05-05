@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Stack Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #chat-container {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 18px;
+        }
+        .user-message {
+            background-color: #e3f2fd;
+            margin-left: 20%;
+            border-bottom-right-radius: 5px;
+        }
+        .bot-message {
+            background-color: #f1f1f1;
+            margin-right: 20%;
+            border-bottom-left-radius: 5px;
+            white-space: pre-line;
+        }
+        #user-input {
+            width: 80%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #send-button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+            font-style: italic;
+        }
+        .loading {
+            color: #888;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tech Stack Assistant</h1>
+    <div id="chat-container">
+        <div class="message bot-message">Hello! I'm your Tech Stack Assistant. Ask me about technology stacks, programming paths, or development concepts!</div>
+    </div>
+    <div>
+        <input type="text" id="user-input" placeholder="Ask a question...">
+        <button id="send-button">Send</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatContainer = document.getElementById('chat-container');
+            const userInput = document.getElementById('user-input');
+            const sendButton = document.getElementById('send-button');
+            
+            // Add initial scroll to bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            // Function to add a message to the chat
+            function addMessage(text, isUser) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = isUser ? 'message user-message' : 'message bot-message';
+                messageDiv.textContent = text;
+                chatContainer.appendChild(messageDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            
+            // Function to add a loading indicator
+            function addLoadingIndicator() {
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'message bot-message loading';
+                loadingDiv.id = 'loading-indicator';
+                loadingDiv.textContent = 'Thinking...';
+                chatContainer.appendChild(loadingDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            
+            // Function to remove loading indicator
+            function removeLoadingIndicator() {
+                const loadingDiv = document.getElementById('loading-indicator');
+                if (loadingDiv) {
+                    chatContainer.removeChild(loadingDiv);
+                }
+            }
+            
+            // Function to handle sending a message
+            async function sendMessage() {
+                const userMessage = userInput.value.trim();
+                if (userMessage === '') return;
+                
+                // Add user message to chat
+                addMessage(userMessage, true);
+                userInput.value = '';
+                
+                // Add loading indicator
+                addLoadingIndicator();
+                
+                try {
+                    // Send message to server
+                    const response = await fetch('/query', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ query: userMessage }),
+                    });
+                    
+                    // Remove loading indicator
+                    removeLoadingIndicator();
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        addMessage(data.answer, false);
+                    } else {
+                        addMessage('Sorry, I encountered an error. Please try again.', false);
+                        console.error('Server error:', await response.text());
+                    }
+                } catch (error) {
+                    // Remove loading indicator
+                    removeLoadingIndicator();
+                    
+                    // Add error message
+                    addMessage('Network error. Please check your connection and try again.', false);
+                    console.error('Fetch error:', error);
+                }
+            }
+            
+            // Event listeners
+            sendButton.addEventListener('click', sendMessage);
+            userInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
