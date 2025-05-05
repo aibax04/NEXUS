@@ -3,86 +3,402 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech Stack Assistant</title>
+    <title>LEO</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --accent-color: #0dcaf0;
+            --border-color: #dee2e6;
+            --chat-user-bg: #e3f2fd;
+            --chat-bot-bg: #f1f1f1;
+            --input-bg: #ffffff;
+            --card-bg: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --header-bg: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --primary-color: #4d94ff;
+            --secondary-color: #909090;
+            --accent-color: #03dac6;
+            --border-color: #333333;
+            --chat-user-bg: #1e3a5f;
+            --chat-bot-bg: #2a2a2a;
+            --input-bg: #2d2d2d;
+            --card-bg: #1e1e1e;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --header-bg: #1e1e1e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 8px var(--shadow-color);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-title h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .logo {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 6px 10px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--border-color);
+        }
+
+        main {
+            flex: 1;
             padding: 20px;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
         }
+
+        .chat-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
         #chat-container {
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            height: 400px;
+            flex: 1;
             overflow-y: auto;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 20px;
+            scroll-behavior: smooth;
         }
+
         .message {
-            margin-bottom: 10px;
-            padding: 8px 12px;
+            margin-bottom: 16px;
+            padding: 12px 16px;
             border-radius: 18px;
+            max-width: 80%;
+            position: relative;
+            line-height: 1.5;
+            box-shadow: 0 1px 3px var(--shadow-color);
         }
+
         .user-message {
-            background-color: #e3f2fd;
-            margin-left: 20%;
+            background-color: var(--chat-user-bg);
+            margin-left: auto;
             border-bottom-right-radius: 5px;
+            color: var(--text-color);
         }
+
         .bot-message {
-            background-color: #f1f1f1;
-            margin-right: 20%;
+            background-color: var(--chat-bot-bg);
+            margin-right: auto;
             border-bottom-left-radius: 5px;
+            color: var(--text-color);
             white-space: pre-line;
         }
-        #user-input {
-            width: 80%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+
+        .message-time {
+            font-size: 0.7rem;
+            color: var(--secondary-color);
+            position: absolute;
+            bottom: 4px;
+            right: 12px;
         }
+
+        .input-container {
+            display: flex;
+            padding: 16px;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            font-size: 1rem;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+        }
+
+        #user-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+        }
+
         #send-button {
-            padding: 8px 16px;
-            background-color: #4CAF50;
+            margin-left: 10px;
+            padding: 12px;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 50%;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
         }
+
+        #send-button:hover {
+            background-color: #0b5ed7;
+        }
+
+        #send-button:disabled {
+            background-color: var(--secondary-color);
+            cursor: not-allowed;
+        }
+
         .error {
-            color: red;
+            color: #dc3545;
             font-style: italic;
         }
+
         .loading {
-            color: #888;
-            font-style: italic;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: inline-block;
+            animation: typing 1.4s infinite ease-in-out both;
+        }
+
+        .typing-indicator span:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .message.with-code pre {
+            background-color: rgba(0, 0, 0, 0.07);
+            border-radius: 6px;
+            padding: 10px;
+            overflow-x: auto;
+            margin: 8px 0;
+        }
+
+        .message.with-code code {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .message {
+                max-width: 90%;
+            }
+            header {
+                padding: 12px 16px;
+            }
+            .header-title h1 {
+                font-size: 1.3rem;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Tech Stack Assistant</h1>
-    <div id="chat-container">
-        <div class="message bot-message">Hello! I'm your Tech Stack Assistant. Ask me about technology stacks, programming paths, or development concepts!</div>
-    </div>
-    <div>
-        <input type="text" id="user-input" placeholder="Ask a question...">
-        <button id="send-button">Send</button>
-    </div>
+    <header>
+        <div class="header-title">
+            <i class="fas fa-laptop-code logo"></i>
+            <h1>Tech Stack Assistant</h1>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
+
+    <main>
+        <div class="chat-card">
+            <div id="chat-container">
+                <div class="message bot-message">
+                    Hello! I'm LEO,ask me about technology stacks programming paths or development concepts!.
+                    <span class="message-time">Just now</span>
+                </div>
+            </div>
+            <div class="input-container">
+                <input type="text" id="user-input" placeholder="Ask a question..." aria-label="Type your message">
+                <button id="send-button" aria-label="Send message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // DOM elements
             const chatContainer = document.getElementById('chat-container');
             const userInput = document.getElementById('user-input');
             const sendButton = document.getElementById('send-button');
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference or prefer-color-scheme
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // Initialize theme
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            }
+            
+            // Theme toggle functionality
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                // Update icon
+                if (newTheme === 'dark') {
+                    themeIcon.classList.replace('fa-moon', 'fa-sun');
+                } else {
+                    themeIcon.classList.replace('fa-sun', 'fa-moon');
+                }
+            });
             
             // Add initial scroll to bottom
             chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            // Format timestamp
+            function formatTime() {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                return `${hours}:${minutes}`;
+            }
+            
+            // Function to detect and format code in messages
+            function formatMessage(text) {
+                // Simple code block detection
+                if (text.includes('```')) {
+                    const parts = text.split('```');
+                    let formattedText = '';
+                    let isCodeBlock = false;
+                    
+                    parts.forEach((part, index) => {
+                        if (index % 2 === 0) {
+                            // Regular text
+                            formattedText += part;
+                        } else {
+                            // Code block
+                            let code = part;
+                            // Check if there's a language specified
+                            const firstLineEnd = code.indexOf('\n');
+                            let language = '';
+                            
+                            if (firstLineEnd > 0) {
+                                language = code.substring(0, firstLineEnd).trim();
+                                if (language) {
+                                    code = code.substring(firstLineEnd + 1);
+                                }
+                            }
+                            
+                            formattedText += `<pre><code class="language-${language}">${code}</code></pre>`;
+                        }
+                    });
+                    
+                    return formattedText;
+                }
+                
+                return text;
+            }
             
             // Function to add a message to the chat
             function addMessage(text, isUser) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = isUser ? 'message user-message' : 'message bot-message';
-                messageDiv.textContent = text;
+                
+                const formattedText = formatMessage(text);
+                if (formattedText !== text) {
+                    messageDiv.classList.add('with-code');
+                    messageDiv.innerHTML = formattedText;
+                } else {
+                    messageDiv.textContent = text;
+                }
+                
+                // Add timestamp
+                const timeSpan = document.createElement('span');
+                timeSpan.className = 'message-time';
+                timeSpan.textContent = formatTime();
+                messageDiv.appendChild(timeSpan);
+                
                 chatContainer.appendChild(messageDiv);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             }
@@ -92,7 +408,16 @@
                 const loadingDiv = document.createElement('div');
                 loadingDiv.className = 'message bot-message loading';
                 loadingDiv.id = 'loading-indicator';
-                loadingDiv.textContent = 'Thinking...';
+                
+                loadingDiv.innerHTML = `
+                    Thinking
+                    <div class="typing-indicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                `;
+                
                 chatContainer.appendChild(loadingDiv);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             }
@@ -109,6 +434,10 @@
             async function sendMessage() {
                 const userMessage = userInput.value.trim();
                 if (userMessage === '') return;
+                
+                // Disable input and button while processing
+                userInput.disabled = true;
+                sendButton.disabled = true;
                 
                 // Add user message to chat
                 addMessage(userMessage, true);
@@ -144,6 +473,11 @@
                     // Add error message
                     addMessage('Network error. Please check your connection and try again.', false);
                     console.error('Fetch error:', error);
+                } finally {
+                    // Re-enable input and button
+                    userInput.disabled = false;
+                    sendButton.disabled = false;
+                    userInput.focus();
                 }
             }
             
@@ -154,6 +488,9 @@
                     sendMessage();
                 }
             });
+            
+            // Focus input on page load
+            userInput.focus();
         });
     </script>
 </body>
