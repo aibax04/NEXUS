@@ -3,352 +3,880 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEO - Tech Stack Assistant</title>
+    <title>NEXUS - Professional Tech Stack Assistant</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+        
         :root {
-            --bg-color: #f8f9fa;
-            --text-color: #212529;
-            --primary-color: #0d6efd;
-            --primary-light: #3d8bfd;
-            --secondary-color: #6c757d;
-            --accent-color: #0dcaf0;
-            --border-color: #dee2e6;
-            --chat-user-bg: #e3f2fd;
-            --chat-bot-bg: #f1f1f1;
-            --input-bg: #ffffff;
-            --card-bg: #ffffff;
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --header-bg: #ffffff;
-            --sidebar-bg: #f1f3f5;
-            --hero-gradient: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
+            /* Core color palette */
+            --primary-color: #4361ee;
+            --primary-gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            --secondary-color: #7209b7;
+            --accent-color: #4cc9f0;
+            --accent-gradient: linear-gradient(135deg, #4cc9f0 0%, #4895ef 100%);
+            --success-color: #4ade80;
+            --warning-color: #fbbf24;
+            --danger-color: #f87171;
+            
+            /* Light theme */
+            --bg-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.07), 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+            
+            /* UI components */
+            --header-height: 70px;
+            --sidebar-width: 280px;
+            --card-radius: 16px;
+            --button-radius: 12px;
+            --input-radius: 12px;
+            
+            /* Chat specific */
+            --chat-user-bg: #e0edff;
+            --chat-bot-bg: #f1f5f9;
         }
 
         [data-theme="dark"] {
-            --bg-color: #121212;
-            --text-color: #e0e0e0;
-            --primary-color: #4d94ff;
-            --primary-light: #6da6ff;
-            --secondary-color: #909090;
-            --accent-color: #03dac6;
-            --border-color: #333333;
-            --chat-user-bg: #1e3a5f;
-            --chat-bot-bg: #2a2a2a;
-            --input-bg: #2d2d2d;
-            --card-bg: #1e1e1e;
-            --shadow-color: rgba(0, 0, 0, 0.4);
-            --header-bg: #1e1e1e;
-            --sidebar-bg: #252525;
-            --hero-gradient: linear-gradient(135deg, #1a3a7a 0%, #0a5c6b 100%);
+            --bg-color: #0f172a;
+            --surface-color: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.25), 0 4px 6px rgba(0, 0, 0, 0.2);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.3), 0 10px 10px rgba(0, 0, 0, 0.2);
+            
+            --chat-user-bg: #334155;
+            --chat-bot-bg: #1e293b;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--header-height);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
             display: grid;
             grid-template-rows: auto 1fr auto;
+            overflow-x: hidden;
         }
 
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.2;
+        }
+
+        /* Header */
         header {
-            background-color: var(--header-bg);
-            box-shadow: 0 2px 8px var(--shadow-color);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background-color: var(--surface-color);
+            height: var(--header-height);
+            box-shadow: var(--shadow-md);
             position: sticky;
             top: 0;
             z-index: 100;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background-color: rgba(var(--surface-color), 0.8);
         }
 
-        .header-title {
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            padding: 0 2rem;
+        }
+
+        .logo-container {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
-        .header-title h1 {
+        .logo {
+            width: 42px;
+            height: 42px;
+            background: var(--primary-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
             font-size: 1.5rem;
-            font-weight: 600;
-            margin: 0;
-            background: var(--hero-gradient);
+            box-shadow: var(--shadow-md);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
-        .logo {
-            color: var(--primary-color);
-            font-size: 1.8rem;
-        }
-
-        nav ul {
+        .main-nav ul {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
             list-style: none;
         }
 
-        nav a {
-            color: var(--text-color);
+        .nav-link {
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
-            padding: 0.5rem;
-            border-radius: 4px;
-            transition: all 0.2s;
+            position: relative;
+            padding: 0.5rem 0;
+            font-size: 1rem;
         }
 
-        nav a:hover {
-            color: var(--primary-color);
-            background-color: rgba(13, 110, 253, 0.1);
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s;
+            border-radius: 3px;
+        }
+
+        .nav-link:hover:after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .theme-toggle {
             background: none;
             border: none;
-            color: var(--secondary-color);
+            color: var(--text-secondary);
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             padding: 0.5rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
+            background-color: var(--bg-color);
         }
 
         .theme-toggle:hover {
-            background-color: var(--border-color);
+            color: var(--primary-color);
             transform: rotate(30deg);
         }
 
+        .cta-button {
+            background: var(--primary-gradient);
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--button-radius);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Main content */
         main {
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 2rem;
-            padding: 2rem;
             max-width: 1400px;
             margin: 0 auto;
             width: 100%;
+            padding: 2rem;
         }
 
-        .content-section {
+        /* Hero section */
+        .hero {
+            position: relative;
+            padding: 6rem 2rem;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
-        }
-
-        .hero {
-            background: var(--hero-gradient);
-            color: white;
-            padding: 3rem 2rem;
-            border-radius: 12px;
+            align-items: center;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(13, 110, 253, 0.2);
+            overflow: hidden;
+            margin-bottom: 4rem;
+            border-radius: var(--card-radius);
         }
 
-        .hero h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: var(--primary-gradient);
+            z-index: -2;
+        }
+
+        .hero-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        .hero-particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-800px) translateX(200px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+            line-height: 1.1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .hero p {
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto 1.5rem;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: white;
-            color: var(--primary-color);
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.2s;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .feature-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 8px var(--shadow-color);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px var(--shadow-color);
-        }
-
-        .feature-card i {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-        }
-
-        .chat-container {
-            position: sticky;
-            top: 1rem;
-            height: calc(100vh - 2rem);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chat-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 12px var(--shadow-color);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-
-        .chat-header {
-            background: var(--hero-gradient);
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        #chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-            scroll-behavior: smooth;
-        }
-
-        .message {
-            margin-bottom: 1rem;
-            padding: 0.75rem 1rem;
-            border-radius: 18px;
-            max-width: 80%;
-            position: relative;
-            line-height: 1.5;
-            box-shadow: 0 1px 3px var(--shadow-color);
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .user-message {
-            background-color: var(--chat-user-bg);
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
             margin-left: auto;
-            border-bottom-right-radius: 5px;
-            color: var(--text-color);
-        }
-
-        .bot-message {
-            background-color: var(--chat-bot-bg);
             margin-right: auto;
-            border-bottom-left-radius: 5px;
-            color: var(--text-color);
-            white-space: pre-line;
         }
 
-        .message-time {
-            font-size: 0.7rem;
-            color: var(--secondary-color);
-            position: absolute;
-            bottom: 4px;
-            right: 12px;
-        }
-
-        .input-container {
+        .hero-buttons {
             display: flex;
-            padding: 1rem;
-            border-top: 1px solid var(--border-color);
-            background-color: var(--card-bg);
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
         }
 
-        #user-input {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            font-size: 1rem;
-            background-color: var(--input-bg);
-            color: var(--text-color);
-            outline: none;
-        }
-
-        #user-input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
-        }
-
-        #send-button {
-            margin-left: 0.5rem;
-            padding: 0.75rem;
-            background-color: var(--primary-color);
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--button-radius);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background-color 0.2s, transform 0.2s;
+            gap: 0.5rem;
         }
 
-        #send-button:hover {
-            background-color: var(--primary-light);
-            transform: scale(1.05);
+        .stat-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        #send-button:disabled {
-            background-color: var(--secondary-color);
-            cursor: not-allowed;
+        /* Features section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-gradient);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        .feature-card {
+            background-color: var(--surface-color);
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        .feature-icon:before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 2px;
+            background: var(--primary-gradient);
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: -1;
+        }
+
+        .feature-icon:after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: var(--primary-gradient);
+            opacity: 0.2;
+            z-index: -2;
+        }
+
+        .feature-content {
+            padding: 2rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .feature-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            transition: gap 0.3s;
+        }
+
+        .feature-link:hover {
+            gap: 0.75rem;
+        }
+
+        /* Roadmaps section */
+        .roadmaps-section {
+            margin-bottom: 5rem;
+        }
+
+        .roadmaps-container {
+            margin-top: 3rem;
+        }
+
+        .roadmap-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .roadmap-tab {
+            background-color: var(--surface-color);
+            color: var(--text-secondary);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--button-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .roadmap-tab.active {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: var(--shadow-md);
+            border-color: transparent;
+        }
+
+        .roadmap-tab:hover:not(.active) {
+            color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .roadmap-content {
+            background-color: var(--surface-color);
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .roadmap-header {
+            background: var(--primary-gradient);
+            padding: 2rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .roadmap-logo {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .roadmap-title {
+            flex: 1;
+        }
+
+        .roadmap-title h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .roadmap-description {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        .roadmap-body {
+            padding: 2rem;
+        }
+
+        .roadmap-steps {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .roadmap-steps:before {
+            content: '';
+            position: absolute;
+            left: 9px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .roadmap-step {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .roadmap-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-marker {
+            position: absolute;
+            left: -2rem;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            box-shadow: 0 0 0 5px var(--surface-color);
+            z-index: 1;
+        }
+
+        .step-content {
+            background-color: var(--bg-color);
+            border-radius: var(--card-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .step-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .step-title h4 {
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .step-difficulty {
+            font-size: 0.75rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .step-resources {
+            background-color: var(--surface-color);
+            padding: 1rem;
+            border-radius: var(--card-radius);
+            margin-top: 1rem;
+        }
+
+        .step-resources h5 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .resource-list {
+            list-style: none;
+        }
+
+        .resource-item {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            align-items: center;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .resource-item i {
+            color: var(--primary-color);
+            font-size: 0.75rem;
+        }
+
+        .resource-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Chat section */
+        .chat-section {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            margin-bottom: 5rem;
+            align-items: start;
+        }
+
+        .chat-info {
+            padding: 2rem;
+        }
+
+        .chat-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .chat-info p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.125rem;
+            line-height: 1.7;
+        }
+
+        .chat-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .chat-feature {
+            background-color: var(--surface-color);
+            border-radius: var(--card-radius);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: var(--shadow-sm);
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .chat-feature-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            background: var(--primary-gradient);
+        }
+
+        .chat-feature-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+        }
+
+        .chat-feature-content p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        .chat-container {
+            background-color: var(--surface-color);
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            position: sticky;
+            top: calc(var(--header-height) + 2rem);
+            max-height: calc(100vh - var(--header-height) - 4rem);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: var(--primary-gradient);
+            padding: 1rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .chat-header-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .chat-header-info h3 {
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .chat-header-info p {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 1rem;
+            max-width: 85%;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .user-avatar {
+            background: var(--accent-gradient);
+        }
+
+        .bot-avatar {
+            background: var(--primary-gradient);
+        }
+
+        .message-content {
+            padding: 1rem;
+            border-radius: 18px;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        .user-message {
+            margin-left: auto;
+        }
+
+        .user-message .message-content {
+            background-color: var(--chat-user-bg);
+            border-bottom-right-radius: 4px;
+            color: var(--text-primary);
+        }
+
+        .bot-message .message-content {
+            background-color: var(--chat-bot-bg);
+            border-bottom-left-radius: 4px;
+            color: var(--text-primary);
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+            align-self: flex-end;
         }
 
         .typing-indicator {
             display: flex;
             gap: 4px;
-            padding: 0.75rem 1rem;
+            padding: 0.5rem 1rem;
             background-color: var(--chat-bot-bg);
             border-radius: 18px;
             width: fit-content;
             margin-bottom: 1rem;
-            border-bottom-left-radius: 5px;
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
         }
 
         .typing-indicator span {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background-color: var(--secondary-color);
+            background-color: var(--primary-color);
             display: inline-block;
             animation: typing 1.4s infinite ease-in-out both;
         }
@@ -366,254 +894,929 @@
             40% { transform: scale(1); }
         }
 
-        footer {
-            background-color: var(--header-bg);
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 -2px 8px var(--shadow-color);
-            margin-top: 2rem;
+        .chat-input {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 0.75rem;
         }
 
-        .footer-content {
-            max-width: 1200px;
+        .chat-input-field {
+            flex: 1;
+            display: flex;
+            position: relative;
+        }
+
+        #user-input {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--input-radius);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-size: 0.9375rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        #user-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+
+        .input-actions {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .input-action {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .input-action:hover {
+            color: var(--primary-color);
+        }
+
+        #send-button {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+                        cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: var(--shadow-sm);
+            flex-shrink: 0;
+        }
+
+        #send-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* FAQ section */
+        .faq-section {
+            margin-bottom: 5rem;
+        }
+
+        .faq-container {
+            max-width: 800px;
             margin: 0 auto;
+        }
+
+        .faq-item {
+            background-color: var(--surface-color);
+            border-radius: var(--card-radius);
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .faq-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: all 0.3s;
         }
 
-        .social-links {
+        .faq-question:hover {
+            color: var(--primary-color);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s, padding 0.3s;
+            color: var(--text-secondary);
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--surface-color);
+            padding: 4rem 2rem 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--primary-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .footer-logo-text {
+            font-weight: 700;
+            font-size: 1.25rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .footer-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .footer-social {
             display: flex;
             gap: 1rem;
         }
 
-        .social-links a {
-            color: var(--secondary-color);
-            font-size: 1.2rem;
-            transition: color 0.2s;
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s;
         }
 
-        .social-links a:hover {
+        .social-link:hover {
+            color: white;
+            background: var(--primary-gradient);
+            transform: translateY(-3px);
+        }
+
+        .footer-heading {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-link a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-link a:hover {
             color: var(--primary-color);
         }
 
+        .footer-newsletter p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        #newsletter-email {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--input-radius);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-size: 0.9375rem;
+            outline: none;
+        }
+
+        #newsletter-email:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+
+        .newsletter-button {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: var(--input-radius);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .newsletter-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-legal a {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-legal a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive styles */
         @media (max-width: 1024px) {
-            main {
+            .chat-section {
                 grid-template-columns: 1fr;
-                padding: 1rem;
             }
             
             .chat-container {
-                height: auto;
-                max-height: 600px;
+                position: static;
+                max-height: none;
             }
         }
 
         @media (max-width: 768px) {
-            header {
+            .header-container {
+                padding: 0 1rem;
+            }
+            
+            .main-nav {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.125rem;
+            }
+            
+            .hero-buttons {
                 flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .roadmap-header {
+                flex-direction: column;
+                text-align: center;
                 gap: 1rem;
-                padding: 1rem;
             }
             
-            nav ul {
-                gap: 1rem;
+            .roadmap-logo {
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                display: none;
             }
             
-            .hero h2 {
-                font-size: 1.8rem;
+            .hero {
+                padding: 4rem 1rem;
             }
             
-            .features {
-                grid-template-columns: 1fr;
+            .hero h1 {
+                font-size: 2rem;
             }
             
-            .message {
-                max-width: 90%;
+            .feature-card {
+                min-width: 100%;
+            }
+            
+            .step-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
             }
         }
 
-        /* Roadmap specific styles */
-        .roadmap-card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px var(--shadow-color);
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
         }
 
-        .roadmap-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 8px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .roadmap-steps {
-            margin-top: 20px;
+        .scale-in {
+            animation: scaleIn 0.3s ease-in-out;
         }
 
-        .step {
-            display: flex;
-            margin-bottom: 20px;
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 1px 3px var(--shadow-color);
-        }
-
-        .step-number {
-            width: 30px;
-            height: 30px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-
-        .step-content {
-            flex: 1;
-        }
-
-        .step-title {
-            color: var(--primary-color);
-            margin-bottom: 8px;
-        }
-
-        .step-description {
-            margin-bottom: 10px;
-        }
-
-        .step-resources {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px dashed var(--border-color);
-        }
-
-        .step-resources h4 {
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-        }
-
-        .resource-list {
-            list-style-type: none;
-        }
-
-        .resource-list li {
-            margin-bottom: 5px;
-            font-size: 0.85rem;
-            padding-left: 15px;
-            position: relative;
-        }
-
-        .resource-list li:before {
-            content: "•";
-            color: var(--primary-color);
-            position: absolute;
-            left: 0;
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <div class="header-title">
-            <i class="fas fa-laptop-code logo"></i>
-            <h1>LEO Tech Assistant</h1>
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <span class="logo-text">NEXUS</span>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#features" class="nav-link">Features</a></li>
+                    <li><a href="#roadmaps" class="nav-link">Roadmaps</a></li>
+                    <li><a href="#chat" class="nav-link">Chat</a></li>
+                    <li><a href="#faq" class="nav-link">FAQ</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="#chat" class="cta-button">
+                    Try Now
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#roadmaps">Roadmaps</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-            <i class="fas fa-moon"></i>
-        </button>
     </header>
 
+    <!-- Main Content -->
     <main>
-        <div class="content-section">
-            <section class="hero">
-                <h2>Your Personal Tech Stack Guide</h2>
-                <p>LEO helps developers navigate through technology stacks, learn new skills, and find the perfect roadmap for their career growth.</p>
-                <a href="#chat" class="btn">Chat with LEO</a>
-            </section>
-
-            <section id="features" class="features">
-                <div class="feature-card">
-                    <i class="fas fa-road"></i>
-                    <h3>Structured Roadmaps</h3>
-                    <p>Step-by-step learning paths for various technologies with curated resources and milestones.</p>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-pattern"></div>
+            <div class="hero-particles" id="particles"></div>
+            
+            <div class="hero-content">
+                <h1>Your Professional Tech Stack Assistant</h1>
+                <p>NEXUS helps developers navigate complex technology ecosystems with personalized guidance, learning paths, and real-time coding assistance.</p>
+                
+                <div class="hero-buttons">
+                    <a href="#chat" class="cta-button">
+                        Start Chatting
+                        <i class="fas fa-comment-dots"></i>
+                    </a>
+                    <a href="#features" class="btn-secondary">
+                        Explore Features
+                        <i class="fas fa-arrow-down"></i>
+                    </a>
                 </div>
-                <div class="feature-card">
-                    <i class="fas fa-robot"></i>
-                    <h3>AI Assistant</h3>
-                    <p>Get instant answers to your tech stack questions from our knowledgeable AI assistant.</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-lightbulb"></i>
-                    <h3>Career Guidance</h3>
-                    <p>Personalized recommendations based on your interests and current skill level.</p>
-                </div>
-            </section>
-
-            <section id="roadmaps">
-                <h2>Popular Technology Roadmaps</h2>
-                <div class="features">
-                    <div class="feature-card roadmap-preview">
-                        <i class="fab fa-react"></i>
-                        <h3>React Developer</h3>
-                        <p>Master React.js from fundamentals to advanced patterns with this comprehensive roadmap.</p>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <i class="fas fa-code"></i>
+                            <span>50+</span>
+                        </div>
+                        <div class="stat-label">Tech Stacks</div>
                     </div>
-                    <div class="feature-card roadmap-preview">
-                        <i class="fab fa-node-js"></i>
-                        <h3>Node.js Developer</h3>
-                        <p>Learn backend development with Node.js, Express, and modern JavaScript.</p>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <i class="fas fa-book"></i>
+                            <span>1000+</span>
+                        </div>
+                        <div class="stat-label">Resources</div>
                     </div>
-                    <div class="feature-card roadmap-preview">
-                        <i class="fab fa-python"></i>
-                        <h3>Python Developer</h3>
-                        <p>From Python basics to web development with Django and Flask.</p>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <i class="fas fa-users"></i>
+                            <span>10K+</span>
+                        </div>
+                        <div class="stat-label">Developers</div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
 
-        <div id="chat" class="chat-container">
-            <div class="chat-card">
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <div class="section-title">
+                <h2>Powerful Features</h2>
+                <p class="section-subtitle">NEXUS provides everything you need to master modern technologies and build better applications faster.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-road"></i>
+                        </div>
+                        <h3 class="feature-title">Personalized Roadmaps</h3>
+                        <p class="feature-description">Get customized learning paths based on your current skill level, goals, and preferred technologies.</p>
+                        <a href="#" class="feature-link">
+                            Learn more
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-code-branch"></i>
+                        </div>
+                        <h3 class="feature-title">Stack Recommendations</h3>
+                        <p class="feature-description">Receive expert suggestions for technology stacks tailored to your project requirements.</p>
+                        <a href="#" class="feature-link">
+                            Learn more
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 class="feature-title">Real-time Assistance</h3>
+                        <p class="feature-description">Get instant help with coding problems, debugging, and best practices from our AI assistant.</p>
+                        <a href="#" class="feature-link">
+                            Learn more
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <h3 class="feature-title">Architecture Guidance</h3>
+                        <p class="feature-description">Plan your application architecture with expert recommendations and diagrams.</p>
+                        <a href="#" class="feature-link">
+                            Learn more
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="feature-title">Interactive Tutorials</h3>
+                        <p class="feature-description">Learn by doing with hands-on coding exercises and guided projects.</p>
+                        <a href="#" class="feature-link">
+                            Learn more
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3 class="feature-title">Code Review</h3>
+                        <p class="feature-description">Submit your code for analysis and receive detailed feedback on improvements.</p>
+                        <a href="#" class="feature-link">
+                            Learn more
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roadmaps Section -->
+        <section class="roadmaps-section" id="roadmaps">
+            <div class="section-title">
+                <h2>Technology Roadmaps</h2>
+                <p class="section-subtitle">Structured learning paths to master any technology stack from beginner to advanced levels.</p>
+            </div>
+            
+            <div class="roadmaps-container">
+                <div class="roadmap-tabs">
+                    <div class="roadmap-tab active" data-tab="frontend">Frontend</div>
+                    <div class="roadmap-tab" data-tab="backend">Backend</div>
+                    <div class="roadmap-tab" data-tab="devops">DevOps</div>
+                    <div class="roadmap-tab" data-tab="mobile">Mobile</div>
+                    <div class="roadmap-tab" data-tab="data">Data Science</div>
+                </div>
+                
+                <div class="roadmap-content">
+                    <div class="roadmap-header">
+                        <div class="roadmap-logo">
+                            <i class="fab fa-react"></i>
+                        </div>
+                        <div class="roadmap-title">
+                            <h3>Frontend Development Roadmap</h3>
+                            <p class="roadmap-description">Master modern frontend development with this comprehensive guide covering HTML, CSS, JavaScript, frameworks, and advanced concepts.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="roadmap-body">
+                        <div class="roadmap-steps">
+                            <div class="roadmap-step">
+                                <div class="step-marker"></div>
+                                <div class="step-content">
+                                    <div class="step-title">
+                                        <h4>HTML & CSS Fundamentals</h4>
+                                        <span class="step-difficulty">Beginner</span>
+                                    </div>
+                                    <p class="step-description">Learn the building blocks of web development including semantic HTML, CSS selectors, box model, flexbox, and grid layout.</p>
+                                    <div class="step-resources">
+                                        <h5>Recommended Resources</h5>
+                                        <ul class="resource-list">
+                                            <li class="resource-item">
+                                                <i class="fas fa-link"></i>
+                                                <span>MDN Web Docs - HTML & CSS</span>
+                                            </li>
+                                            <li class="resource-item">
+                                                <i class="fas fa-book"></i>
+                                                <span>CSS Tricks Complete Guide to Flexbox</span>
+                                            </li>
+                                            <li class="resource-item">
+                                                <i class="fas fa-video"></i>
+                                                <span>FreeCodeCamp Responsive Web Design Course</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="roadmap-step">
+                                <div class="step-marker"></div>
+                                <div class="step-content">
+                                    <div class="step-title">
+                                        <h4>JavaScript Essentials</h4>
+                                        <span class="step-difficulty">Beginner</span>
+                                    </div>
+                                    <p class="step-description">Master JavaScript fundamentals including variables, functions, objects, arrays, DOM manipulation, and ES6+ features.</p>
+                                    <div class="step-resources">
+                                        <h5>Recommended Resources</h5>
+                                        <ul class="resource-list">
+                                            <li class="resource-item">
+                                                <i class="fas fa-link"></i>
+                                                <span>JavaScript.info - Modern JavaScript Tutorial</span>
+                                            </li>
+                                            <li class="resource-item">
+                                                <i class="fas fa-book"></i>
+                                                <span>Eloquent JavaScript (Free Online Book)</span>
+                                            </li>
+                                            <li class="resource-item">
+                                                <i class="fas fa-video"></i>
+                                                <span>Wes Bos JavaScript30 Course</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="roadmap-step">
+                                <div class="step-marker"></div>
+                                <div class="step-content">
+                                    <div class="step-title">
+                                        <h4>Frontend Framework (React)</h4>
+                                        <span class="step-difficulty">Intermediate</span>
+                                    </div>
+                                    <p class="step-description">Learn React fundamentals including components, state management, hooks, and building single page applications.</p>
+                                    <div class="step-resources">
+                                        <h5>Recommended Resources</h5>
+                                        <ul class="resource-list">
+                                            <li class="resource-item">
+                                                <i class="fas fa-link"></i>
+                                                <span>React Official Documentation</span>
+                                            </li>
+                                            <li class="resource-item">
+                                                <i class="fas fa-book"></i>
+                                                <span>Fullstack React Book</span>
+                                            </li>
+                                            <li class="resource-item">
+                                                <i class="fas fa-video"></i>
+                                                <span>Frontend Masters - Complete Intro to React</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chat Section -->
+        <section class="chat-section" id="chat">
+            <div class="chat-info">
+                <h2>Chat with NEXUS</h2>
+                <p>Get instant answers to your technical questions, code reviews, architecture advice, and personalized learning recommendations from our AI assistant.</p>
+                
+                <div class="chat-features">
+                    <div class="chat-feature">
+                        <div class="chat-feature-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="chat-feature-content">
+                            <h4>Code Assistance</h4>
+                            <p>Get help with debugging, optimization, and best practices.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-feature">
+                        <div class="chat-feature-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="chat-feature-content">
+                            <h4>Tech Recommendations</h4>
+                            <p>Receive personalized stack suggestions for your projects.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-feature">
+                        <div class="chat-feature-icon">
+                            <i class="fas fa-road"></i>
+                        </div>
+                        <div class="chat-feature-content">
+                            <h4>Learning Paths</h4>
+                            <p>Get customized roadmaps based on your skill level.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-feature">
+                        <div class="chat-feature-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="chat-feature-content">
+                            <h4>Architecture Advice</h4>
+                            <p>Plan your application structure with expert guidance.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>NEXUS understands context and can remember previous conversations to provide more relevant answers. Try asking about specific technologies, debugging help, or recommendations for your next project.</p>
+            </div>
+            
+            <div class="chat-container">
                 <div class="chat-header">
-                    <i class="fas fa-robot"></i> LEO - Tech Assistant
-                </div>
-                <div id="chat-messages">
-                    <div class="message bot-message">
-                        Hello! I'm LEO, your Tech Stack Assistant. I can help you with questions about programming languages, frameworks, and development roadmaps. What would you like to know about?
-                        <span class="message-time">Just now</span>
+                    <div class="chat-header-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="chat-header-info">
+                        <h3>NEXUS Assistant</h3>
+                        <p>Online - Ready to help</p>
                     </div>
                 </div>
-                <div class="input-container">
-                    <input type="text" id="user-input" placeholder="Ask a question..." aria-label="Type your message">
-                    <button id="send-button" aria-label="Send message">
+                
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot-message">
+                        <div class="message-avatar bot-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            Hello! I'm NEXUS, your tech stack assistant. How can I help you today? You can ask me about:
+                            <ul>
+                                <li>Technology recommendations</li>
+                                <li>Learning resources</li>
+                                <li>Code debugging</li>
+                                <li>Project architecture</li>
+                                <li>Career advice</li>
+                            </ul>
+                            <div class="message-time">Just now</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input">
+                    <div class="chat-input-field">
+                        <input type="text" id="user-input" placeholder="Ask me anything about technology...">
+                        <div class="input-actions">
+                            <i class="fas fa-paperclip input-action"></i>
+                        </div>
+                    </div>
+                    <button id="send-button">
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section" id="faq">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p class="section-subtitle">Find answers to common questions about NEXUS and how it can help you.</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What technologies does NEXUS support?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>NEXUS supports a wide range of technologies across frontend (HTML, CSS, JavaScript, React, Vue, etc.), backend (Node.js, Python, Java, .NET, etc.), databases (SQL, NoSQL), DevOps (Docker, Kubernetes, AWS), mobile development (React Native, Flutter), and data science (Python, R, ML frameworks). Our knowledge is constantly updated to include the latest technologies and best practices.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How does NEXUS personalize recommendations?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>NEXUS personalizes recommendations based on several factors: your current skill level (which you can specify), the technologies you're already familiar with, your project requirements (performance needs, team size, budget), and your learning preferences (video tutorials, documentation, hands-on projects). The more you interact with NEXUS, the better it can tailor its advice.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can NEXUS help with debugging specific code?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! You can share your code snippets with NEXUS (either by pasting or uploading files) and it will analyze the code for errors, suggest improvements, explain potential issues, and provide corrected versions. NEXUS can help with syntax errors, logical bugs, performance issues, and security vulnerabilities across many programming languages.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How accurate are NEXUS's recommendations?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>NEXUS's recommendations are based on industry best practices, current trends, and analysis of successful projects. While we strive for high accuracy, technology choices often depend on specific contexts. NEXUS will explain the reasoning behind recommendations so you can make informed decisions. We recommend cross-referencing with other sources for critical decisions.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is there a mobile app for NEXUS?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Currently, NEXUS is available as a web application that works well on mobile browsers. We're developing native mobile apps for iOS and Android that will include additional features like offline access to your saved roadmaps and notifications for new learning content. The mobile apps are expected to launch later this year.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
+    <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <p>© 2023 LEO Tech Assistant. All rights reserved.</p>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-github"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <div class="footer-logo-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <span class="footer-logo-text">NEXUS</span>
+                </div>
+                <p class="footer-description">Your professional tech stack assistant helping developers navigate complex technology ecosystems with personalized guidance.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4 class="footer-heading">Product</h4>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="#features">Features</a></li>
+                    <li class="footer-link"><a href="#roadmaps">Roadmaps</a></li>
+                    <li class="footer-link"><a href="#chat">Chat Assistant</a></li>
+                    <li class="footer-link"><a href="#">Pricing</a></li>
+                    <li class="footer-link"><a href="#">Updates</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4 class="footer-heading">Resources</h4>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="#">Documentation</a></li>
+                    <li class="footer-link"><a href="#">Blog</a></li>
+                    <li class="footer-link"><a href="#">Tutorials</a></li>
+                    <li class="footer-link"><a href="#">Community</a></li>
+                    <li class="footer-link"><a href="#">Support</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4 class="footer-heading">Company</h4>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="#">About Us</a></li>
+                    <li class="footer-link"><a href="#">Careers</a></li>
+                    <li class="footer-link"><a href="#">Contact</a></li>
+                    <li class="footer-link"><a href="#">Privacy Policy</a></li>
+                    <li class="footer-link"><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4 class="footer-heading">Newsletter</h4>
+                <p class="footer-description">Subscribe to get updates on new features, learning resources, and tech insights.</p>
+                <form class="newsletter-form">
+                    <input type="email" id="newsletter-email" placeholder="Your email address" required>
+                    <button type="submit" class="newsletter-button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="copyright">© 2023 NEXUS. All rights reserved.</p>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookies</a>
             </div>
         </div>
     </footer>
+
+    
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
