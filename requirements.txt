@@ -11,3 +11,11 @@ transformers
 torch
 accelerate
 bitsandbytes
+
+google-generativeai
+flask
+gunicorn
+pinecone-client
+
+sqlalchemy
+psycopg2-binary
