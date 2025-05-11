@@ -468,90 +468,71 @@
 
         .roadmap-tabs {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+            gap: 1.5rem;
             justify-content: center;
+            margin-bottom: 2rem;
         }
 
         .roadmap-tab {
-            background-color: var(--surface-color);
-            color: var(--text-secondary);
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--button-radius);
+            background: #181f2e;
+            color: #fff;
+            border-radius: 16px;
+            padding: 0.75rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-color);
+            border: none;
+            transition: background 0.2s, color 0.2s;
         }
 
-        .roadmap-tab.active {
-            background: var(--primary-gradient);
-            color: white;
-            box-shadow: var(--shadow-md);
-            border-color: transparent;
-        }
-
-        .roadmap-tab:hover:not(.active) {
-            color: var(--primary-color);
-            box-shadow: var(--shadow-md);
+        .roadmap-tab.active,
+        .roadmap-tab:hover {
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(67, 97, 238, 0.15);
         }
 
         .roadmap-content {
-            background-color: var(--surface-color);
-            border-radius: var(--card-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow-lg);
-            position: relative;
+            display: none;
+            animation: fadeIn 0.5s;
         }
 
-        .roadmap-header {
-            background: var(--primary-gradient);
+        .roadmap-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        .roadmap-hero {
             padding: 2rem;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
+            border-radius: 24px 24px 0 0;
+            background: linear-gradient(90deg, #4cc9f0 0%, #3a0ca3 100%);
         }
 
-        .roadmap-logo {
-            width: 80px;
-            height: 80px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-        }
-
-        .roadmap-title {
-            flex: 1;
-        }
-
-        .roadmap-title h3 {
+        .roadmap-hero h2 {
             font-size: 2rem;
-            margin-bottom: 0.5rem;
             font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: white;
         }
 
-        .roadmap-description {
-            font-size: 1rem;
-            opacity: 0.9;
-            max-width: 600px;
+        .roadmap-hero p {
+            font-size: 1.1rem;
+            color: #e0e7ef;
         }
 
-        .roadmap-body {
+        .roadmap-step {
+            background: #181f2e;
+            border-radius: 0 0 24px 24px;
+            margin-bottom: 2rem;
+            margin-top: 0;
             padding: 2rem;
         }
 
-        .roadmap-steps {
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .roadmap-steps:before {
+        .roadmap-step:before {
             content: '';
             position: absolute;
             left: 9px;
@@ -559,11 +540,6 @@
             bottom: 0;
             width: 2px;
             background: var(--border-color);
-        }
-
-        .roadmap-step {
-            position: relative;
-            margin-bottom: 2rem;
         }
 
         .roadmap-step:last-child {
@@ -939,61 +915,66 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* FAQ Section */
+        /* FAQ section */
         .faq-section {
             margin-bottom: 5rem;
         }
 
         .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
+            max-width: 900px;
+            margin: 2.5rem auto 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
         .faq-item {
-            background-color: var(--surface-color);
-            border-radius: var(--card-radius);
-            margin-bottom: 1rem;
-            box-shadow: var(--shadow-sm);
+            background: #1e293b;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 24px rgba(67, 97, 238, 0.10);
             overflow: hidden;
+            transition: box-shadow 0.2s;
         }
 
-        .faq-item:last-child {
-            margin-bottom: 0;
+        .faq-item.active {
+            box-shadow: 0 8px 32px rgba(76, 201, 240, 0.15);
         }
 
         .faq-question {
-            padding: 1.5rem;
+            padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            font-weight: 600;
-            color: var(--text-primary);
-            transition: all 0.3s;
-        }
-
-        .faq-question:hover {
-            color: var(--primary-color);
+            font-weight: 700;
+            color: #fff;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+            user-select: none;
         }
 
         .faq-question i {
             transition: transform 0.3s;
+            font-size: 1.3rem;
+            color: #a5b4fc;
         }
 
         .faq-item.active .faq-question i {
             transform: rotate(180deg);
+            color: #4cc9f0;
         }
 
         .faq-answer {
-            padding: 0 1.5rem;
+            padding: 0 2rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s, padding 0.3s;
-            color: var(--text-secondary);
+            transition: max-height 0.4s cubic-bezier(.4,0,.2,1), padding 0.3s;
+            color: #cbd5e1;
+            font-size: 1.05rem;
         }
 
         .faq-item.active .faq-answer {
-            padding: 0 1.5rem 1.5rem;
+            padding: 1rem 2rem 2rem 2rem;
             max-height: 500px;
         }
 
@@ -1335,6 +1316,108 @@
           color: #fff;
           box-shadow: 0 4px 16px rgba(67, 97, 238, 0.15);
         }
+
+        .section-title h2 {
+          font-size: 2.8rem;
+          font-weight: 800;
+          color: #fff;
+          text-align: center;
+          margin-bottom: 0.5rem;
+          font-family: 'Poppins', sans-serif;
+        }
+        .faq-underline {
+          width: 80px;
+          height: 4px;
+          background: linear-gradient(90deg, #4cc9f0 0%, #4361ee 100%);
+          margin: 1rem auto 0;
+          border-radius: 2px;
+        }
+        .faq-container {
+          max-width: 900px;
+          margin: 2.5rem auto 0 auto;
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+        .faq-item {
+          background: #1e293b;
+          border-radius: 1.5rem;
+          box-shadow: 0 4px 24px rgba(67, 97, 238, 0.10);
+          overflow: hidden;
+          transition: box-shadow 0.2s;
+        }
+        .faq-item.active {
+          box-shadow: 0 8px 32px rgba(76, 201, 240, 0.15);
+        }
+        .faq-question {
+          padding: 1.5rem 2rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          cursor: pointer;
+          font-weight: 700;
+          color: #fff;
+          font-size: 1.2rem;
+          transition: color 0.3s;
+          user-select: none;
+        }
+        .faq-question i {
+          transition: transform 0.3s;
+          font-size: 1.3rem;
+          color: #a5b4fc;
+        }
+        .faq-item.active .faq-question i {
+          transform: rotate(180deg);
+          color: #4cc9f0;
+        }
+        .faq-answer {
+          padding: 0 2rem;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.4s cubic-bezier(.4,0,.2,1), padding 0.3s;
+          color: #cbd5e1;
+          font-size: 1.05rem;
+        }
+        .faq-item.active .faq-answer {
+          padding: 1rem 2rem 2rem 2rem;
+          max-height: 500px;
+        }
+
+        .roadmap-heading {
+          font-size: 2.8rem;
+          font-weight: 900;
+          color: #fff;
+          margin-bottom: 0.5rem;
+          font-family: 'Poppins', sans-serif;
+          text-align: center;
+          letter-spacing: 0.5px;
+        }
+
+        .section-subtitle {
+          color: #e0e7ef;
+          font-size: 1.15rem;
+          text-align: center;
+          margin: 0 auto;
+          max-width: 700px;
+        }
+
+        .features-heading {
+          font-size: 2.8rem;
+          font-weight: 900;
+          color: #fff;
+          margin-bottom: 0.5rem;
+          font-family: 'Poppins', sans-serif;
+          text-align: center;
+          letter-spacing: 0.5px;
+        }
+
+        .section-subtitle {
+          color: #e0e7ef;
+          font-size: 1.15rem;
+          text-align: center;
+          margin: 0 auto;
+          max-width: 700px;
+        }
     </style>
 </head>
 <body>
@@ -1354,7 +1437,7 @@
                     <li><a href="#roadmaps" class="nav-link">Roadmaps</a></li>
                     <li><a href="#chat" class="nav-link">Chat</a></li>
                     <li><a href="#faq" class="nav-link">FAQ</a></li>
-                    <li><a href="/courses" class="nav-link">Courses</a></li>
+                    <li><a href="#courses" class="nav-link">Courses</a></li>
                 </ul>
             </nav>
             
@@ -1426,9 +1509,9 @@
 
         <!-- Features Section -->
         <section class="features-section" id="features">
-            <div class="section-title">
-                <h2>Powerful Features</h2>
-                <p class="section-subtitle">NEXUS provides everything you need to master modern technologies and build better applications faster.</p>
+            <div class="section-title" style="text-align: center; margin-bottom: 1.5rem;">
+              <h2 class="features-heading">Powerful Features</h2>
+              <p class="section-subtitle">NEXUS provides everything you need to master modern technologies and build better applications faster.</p>
             </div>
             
             <div class="features-grid">
@@ -1520,120 +1603,157 @@
 
         <!-- Roadmaps Section -->
         <section class="roadmaps-section" id="roadmaps">
-            <div class="section-title">
-                <h2>Technology Roadmaps</h2>
-                <p class="section-subtitle">Structured learning paths to master any technology stack from beginner to advanced levels.</p>
+          <div class="section-title" style="text-align: center; margin-bottom: 1.5rem;">
+            <h2 class="roadmap-heading">Technology Roadmaps</h2>
+            <p class="section-subtitle">Structured learning paths to master any technology stack from beginner to advanced levels.</p>
+          </div>
+          <div class="roadmaps-container">
+            <div class="roadmap-tabs">
+              <div class="roadmap-tab active" data-tab="frontend">Frontend</div>
+              <div class="roadmap-tab" data-tab="backend">Backend</div>
+              <div class="roadmap-tab" data-tab="devops">DevOps</div>
+              <div class="roadmap-tab" data-tab="mobile">Mobile</div>
+              <div class="roadmap-tab" data-tab="datascience">Data Science</div>
             </div>
-            
-            <div class="roadmaps-container">
-                <div class="roadmap-tabs">
-                    <div class="roadmap-tab active" data-tab="frontend">Frontend</div>
-                    <div class="roadmap-tab" data-tab="backend">Backend</div>
-                    <div class="roadmap-tab" data-tab="devops">DevOps</div>
-                    <div class="roadmap-tab" data-tab="mobile">Mobile</div>
-                    <div class="roadmap-tab" data-tab="data">Data Science</div>
+
+            <!-- Frontend Roadmap -->
+            <div class="roadmap-content active" data-tab="frontend">
+              <div class="roadmap-hero" style="background: linear-gradient(90deg, #4cc9f0 0%, #3a0ca3 100%); border-radius: 24px 24px 0 0; padding: 2rem;">
+                <h2 style="color:#fff; font-size:2rem; font-weight:700; margin-bottom:0.5rem;">
+                  <i class="fas fa-atom"></i> Frontend Development Roadmap
+                </h2>
+                <p style="color:#e0e7ef; font-size:1.1rem;">
+                  Master modern frontend development with this comprehensive guide covering HTML, CSS, JavaScript, frameworks, and advanced concepts.
+                </p>
+              </div>
+              <div class="roadmap-step" style="background:#181f2e; border-radius:0 0 24px 24px; margin-bottom:2rem; margin-top:0; padding:2rem;">
+                <div style="display:flex; align-items:center; gap:1rem;">
+                  <div style="width:18px; height:18px; background:#4cc9f0; border-radius:50%;"></div>
+                  <h3 style="color:#fff; font-size:1.3rem; font-weight:700;">HTML &amp; CSS Fundamentals</h3>
+                  <span style="margin-left:auto; background:#4cc9f0; color:#fff; border-radius:12px; padding:0.2rem 1rem; font-size:0.95rem;">Beginner</span>
                 </div>
-                
-                <div class="roadmap-content">
-                    <div class="roadmap-header">
-                        <div class="roadmap-logo">
-                            <i class="fab fa-react"></i>
-                        </div>
-                        <div class="roadmap-title">
-                            <h3>Frontend Development Roadmap</h3>
-                            <p class="roadmap-description">Master modern frontend development with this comprehensive guide covering HTML, CSS, JavaScript, frameworks, and advanced concepts.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="roadmap-body">
-                        <div class="roadmap-steps">
-                            <div class="roadmap-step">
-                                <div class="step-marker"></div>
-                                <div class="step-content">
-                                    <div class="step-title">
-                                        <h4>HTML & CSS Fundamentals</h4>
-                                        <span class="step-difficulty">Beginner</span>
-                                    </div>
-                                    <p class="step-description">Learn the building blocks of web development including semantic HTML, CSS selectors, box model, flexbox, and grid layout.</p>
-                                    <div class="step-resources">
-                                        <h5>Recommended Resources</h5>
-                                        <ul class="resource-list">
-                                            <li class="resource-item">
-                                                <i class="fas fa-link"></i>
-                                                <span>MDN Web Docs - HTML & CSS</span>
-                                            </li>
-                                            <li class="resource-item">
-                                                <i class="fas fa-book"></i>
-                                                <span>CSS Tricks Complete Guide to Flexbox</span>
-                                            </li>
-                                            <li class="resource-item">
-                                                <i class="fas fa-video"></i>
-                                                <span>FreeCodeCamp Responsive Web Design Course</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="roadmap-step">
-                                <div class="step-marker"></div>
-                                <div class="step-content">
-                                    <div class="step-title">
-                                        <h4>JavaScript Essentials</h4>
-                                        <span class="step-difficulty">Beginner</span>
-                                    </div>
-                                    <p class="step-description">Master JavaScript fundamentals including variables, functions, objects, arrays, DOM manipulation, and ES6+ features.</p>
-                                    <div class="step-resources">
-                                        <h5>Recommended Resources</h5>
-                                        <ul class="resource-list">
-                                            <li class="resource-item">
-                                                <i class="fas fa-link"></i>
-                                                <span>JavaScript.info - Modern JavaScript Tutorial</span>
-                                            </li>
-                                            <li class="resource-item">
-                                                <i class="fas fa-book"></i>
-                                                <span>Eloquent JavaScript (Free Online Book)</span>
-                                            </li>
-                                            <li class="resource-item">
-                                                <i class="fas fa-video"></i>
-                                                <span>Wes Bos JavaScript30 Course</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="roadmap-step">
-                                <div class="step-marker"></div>
-                                <div class="step-content">
-                                    <div class="step-title">
-                                        <h4>Frontend Framework (React)</h4>
-                                        <span class="step-difficulty">Intermediate</span>
-                                    </div>
-                                    <p class="step-description">Learn React fundamentals including components, state management, hooks, and building single page applications.</p>
-                                    <div class="step-resources">
-                                        <h5>Recommended Resources</h5>
-                                        <ul class="resource-list">
-                                            <li class="resource-item">
-                                                <i class="fas fa-link"></i>
-                                                <span>React Official Documentation</span>
-                                            </li>
-                                            <li class="resource-item">
-                                                <i class="fas fa-book"></i>
-                                                <span>Fullstack React Book</span>
-                                            </li>
-                                            <li class="resource-item">
-                                                <i class="fas fa-video"></i>
-                                                <span>Frontend Masters - Complete Intro to React</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <p style="color:#cbd5e1; margin:1rem 0 0 2.2rem;">Learn the building blocks of web development including semantic HTML, CSS selectors, box model, flexbox, and grid layout.</p>
+                <div style="background:#232b3e; border-radius:16px; margin:1.5rem 0 0 2.2rem; padding:1rem;">
+                  <strong style="color:#fff;">RECOMMENDED RESOURCES</strong>
+                  <ul style="margin:0.5rem 0 0 0; padding:0; list-style:none;">
+                    <li style="margin-bottom:0.5rem;"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" style="color:#4cc9f0;"><i class="fas fa-link"></i> MDN Web Docs - HTML &amp; CSS</a></li>
+                    <li style="margin-bottom:0.5rem;"><a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" target="_blank" style="color:#4cc9f0;"><i class="fas fa-link"></i> CSS Tricks Complete Guide to Flexbox</a></li>
+                    <li><a href="https://www.freecodecamp.org/learn/2022/responsive-web-design/" target="_blank" style="color:#4cc9f0;"><i class="fas fa-video"></i> FreeCodeCamp Responsive Web Design Course</a></li>
+                  </ul>
                 </div>
+              </div>
+              <!-- Add more steps as needed -->
             </div>
+
+            <!-- Backend Roadmap -->
+            <div class="roadmap-content" data-tab="backend">
+              <div class="roadmap-hero" style="background: linear-gradient(90deg, #43e6ee 0%, #3a0ca3 100%); border-radius: 24px 24px 0 0; padding: 2rem;">
+                <h2 style="color:#fff; font-size:2rem; font-weight:700; margin-bottom:0.5rem;">
+                  <i class="fas fa-server"></i> Backend Development Roadmap
+                </h2>
+                <p style="color:#e0e7ef; font-size:1.1rem;">
+                  Learn backend fundamentals, databases, APIs, authentication, and deployment.
+                </p>
+              </div>
+              <div class="roadmap-step" style="background:#181f2e; border-radius:0 0 24px 24px; margin-bottom:2rem; margin-top:0; padding:2rem;">
+                <div style="display:flex; align-items:center; gap:1rem;">
+                  <div style="width:18px; height:18px; background:#43e6ee; border-radius:50%;"></div>
+                  <h3 style="color:#fff; font-size:1.3rem; font-weight:700;">APIs &amp; Databases</h3>
+                  <span style="margin-left:auto; background:#43e6ee; color:#fff; border-radius:12px; padding:0.2rem 1rem; font-size:0.95rem;">Intermediate</span>
+                </div>
+                <p style="color:#cbd5e1; margin:1rem 0 0 2.2rem;">Build RESTful APIs, connect to SQL/NoSQL databases, and implement authentication.</p>
+                <div style="background:#232b3e; border-radius:16px; margin:1.5rem 0 0 2.2rem; padding:1rem;">
+                  <strong style="color:#fff;">RECOMMENDED RESOURCES</strong>
+                  <ul style="margin:0.5rem 0 0 0; padding:0; list-style:none;">
+                    <li style="margin-bottom:0.5rem;"><a href="https://www.freecodecamp.org/learn/back-end-development-and-apis/" target="_blank" style="color:#43e6ee;"><i class="fas fa-link"></i> FreeCodeCamp Back End Development and APIs</a></li>
+                    <li style="margin-bottom:0.5rem;"><a href="https://www.mongodb.com/developer/products/mongodb/mongodb-basics/" target="_blank" style="color:#43e6ee;"><i class="fas fa-link"></i> MongoDB Basics</a></li>
+                    <li><a href="https://www.digitalocean.com/community/tutorial_series/api-development" target="_blank" style="color:#43e6ee;"><i class="fas fa-link"></i> DigitalOcean API Development Tutorials</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- DevOps Roadmap -->
+            <div class="roadmap-content" data-tab="devops">
+              <div class="roadmap-hero" style="background: linear-gradient(90deg, #43eea1 0%, #3a0ca3 100%); border-radius: 24px 24px 0 0; padding: 2rem;">
+                <h2 style="color:#fff; font-size:2rem; font-weight:700; margin-bottom:0.5rem;">
+                  <i class="fas fa-cogs"></i> DevOps Roadmap
+                </h2>
+                <p style="color:#e0e7ef; font-size:1.1rem;">
+                  Learn CI/CD, containerization, cloud, and infrastructure as code.
+                </p>
+              </div>
+              <div class="roadmap-step" style="background:#181f2e; border-radius:0 0 24px 24px; margin-bottom:2rem; margin-top:0; padding:2rem;">
+                <div style="display:flex; align-items:center; gap:1rem;">
+                  <div style="width:18px; height:18px; background:#43eea1; border-radius:50%;"></div>
+                  <h3 style="color:#fff; font-size:1.3rem; font-weight:700;">CI/CD &amp; Containers</h3>
+                  <span style="margin-left:auto; background:#43eea1; color:#fff; border-radius:12px; padding:0.2rem 1rem; font-size:0.95rem;">Intermediate</span>
+                </div>
+                <p style="color:#cbd5e1; margin:1rem 0 0 2.2rem;">Automate deployments, use Docker/Kubernetes, and manage cloud infrastructure.</p>
+                <div style="background:#232b3e; border-radius:16px; margin:1.5rem 0 0 2.2rem; padding:1rem;">
+                  <strong style="color:#fff;">RECOMMENDED RESOURCES</strong>
+                  <ul style="margin:0.5rem 0 0 0; padding:0; list-style:none;">
+                    <li style="margin-bottom:0.5rem;"><a href="https://www.freecodecamp.org/news/devops-cicd-docker-kubernetes/" target="_blank" style="color:#43eea1;"><i class="fas fa-link"></i> FreeCodeCamp DevOps, CI/CD, Docker, Kubernetes</a></li>
+                    <li><a href="https://www.digitalocean.com/community/tutorials/tag/devops" target="_blank" style="color:#43eea1;"><i class="fas fa-link"></i> DigitalOcean DevOps Tutorials</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mobile Roadmap -->
+            <div class="roadmap-content" data-tab="mobile">
+              <div class="roadmap-hero" style="background: linear-gradient(90deg, #4c6ef5 0%, #3a0ca3 100%); border-radius: 24px 24px 0 0; padding: 2rem;">
+                <h2 style="color:#fff; font-size:2rem; font-weight:700; margin-bottom:0.5rem;">
+                  <i class="fas fa-mobile-alt"></i> Mobile Development Roadmap
+                </h2>
+                <p style="color:#e0e7ef; font-size:1.1rem;">
+                  Learn to build cross-platform mobile apps with React Native, Flutter, and more.
+                </p>
+              </div>
+              <div class="roadmap-step" style="background:#181f2e; border-radius:0 0 24px 24px; margin-bottom:2rem; margin-top:0; padding:2rem;">
+                <div style="display:flex; align-items:center; gap:1rem;">
+                  <div style="width:18px; height:18px; background:#4c6ef5; border-radius:50%;"></div>
+                  <h3 style="color:#fff; font-size:1.3rem; font-weight:700;">Cross-Platform Frameworks</h3>
+                  <span style="margin-left:auto; background:#4c6ef5; color:#fff; border-radius:12px; padding:0.2rem 1rem; font-size:0.95rem;">Intermediate</span>
+                </div>
+                <p style="color:#cbd5e1; margin:1rem 0 0 2.2rem;">Build apps with React Native, Flutter, and learn mobile UI/UX best practices.</p>
+                <div style="background:#232b3e; border-radius:16px; margin:1.5rem 0 0 2.2rem; padding:1rem;">
+                  <strong style="color:#fff;">RECOMMENDED RESOURCES</strong>
+                  <ul style="margin:0.5rem 0 0 0; padding:0; list-style:none;">
+                    <li style="margin-bottom:0.5rem;"><a href="https://reactnative.dev/docs/getting-started" target="_blank" style="color:#4c6ef5;"><i class="fas fa-link"></i> React Native Docs</a></li>
+                    <li><a href="https://flutter.dev/docs" target="_blank" style="color:#4c6ef5;"><i class="fas fa-link"></i> Flutter Docs</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Data Science Roadmap -->
+            <div class="roadmap-content" data-tab="datascience">
+              <div class="roadmap-hero" style="background: linear-gradient(90deg, #43e6ee 0%, #43eea1 100%); border-radius: 24px 24px 0 0; padding: 2rem;">
+                <h2 style="color:#fff; font-size:2rem; font-weight:700; margin-bottom:0.5rem;">
+                  <i class="fas fa-chart-line"></i> Data Science Roadmap
+                </h2>
+                <p style="color:#e0e7ef; font-size:1.1rem;">
+                  Learn Python, data analysis, machine learning, and visualization.
+                </p>
+              </div>
+              <div class="roadmap-step" style="background:#181f2e; border-radius:0 0 24px 24px; margin-bottom:2rem; margin-top:0; padding:2rem;">
+                <div style="display:flex; align-items:center; gap:1rem;">
+                  <div style="width:18px; height:18px; background:#43e6ee; border-radius:50%;"></div>
+                  <h3 style="color:#fff; font-size:1.3rem; font-weight:700;">Python &amp; Machine Learning</h3>
+                  <span style="margin-left:auto; background:#43e6ee; color:#fff; border-radius:12px; padding:0.2rem 1rem; font-size:0.95rem;">Intermediate</span>
+                </div>
+                <p style="color:#cbd5e1; margin:1rem 0 0 2.2rem;">Analyze data, build ML models, and visualize results with Python libraries.</p>
+                <div style="background:#232b3e; border-radius:16px; margin:1.5rem 0 0 2.2rem; padding:1rem;">
+                  <strong style="color:#fff;">RECOMMENDED RESOURCES</strong>
+                  <ul style="margin:0.5rem 0 0 0; padding:0; list-style:none;">
+                    <li style="margin-bottom:0.5rem;"><a href="https://www.coursera.org/learn/python-data-analysis" target="_blank" style="color:#43e6ee;"><i class="fas fa-link"></i> Coursera Python Data Analysis</a></li>
+                    <li><a href="https://www.coursera.org/learn/machine-learning" target="_blank" style="color:#43e6ee;"><i class="fas fa-link"></i> Coursera Machine Learning (Andrew Ng)</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <!-- Start of Courses Section -->
@@ -1859,9 +1979,9 @@
         <section class="faq-section" id="faq">
             <div class="section-title">
                 <h2>Frequently Asked Questions</h2>
-                <p class="section-subtitle">Find answers to common questions about NEXUS and how it can help you.</p>
+                <!-- Subtitle removed -->
+                <div class="faq-underline"></div>
             </div>
-            
             <div class="faq-container">
                 <div class="faq-item">
                     <div class="faq-question">
@@ -1872,7 +1992,6 @@
                         <p>NEXUS supports a wide range of technologies across frontend (HTML, CSS, JavaScript, React, Vue, etc.), backend (Node.js, Python, Java, .NET, etc.), databases (SQL, NoSQL), DevOps (Docker, Kubernetes, AWS), mobile development (React Native, Flutter), and data science (Python, R, ML frameworks). Our knowledge is constantly updated to include the latest technologies and best practices.</p>
                     </div>
                 </div>
-                
                 <div class="faq-item">
                     <div class="faq-question">
                         <span>How does NEXUS personalize recommendations?</span>
@@ -1882,7 +2001,6 @@
                         <p>NEXUS personalizes recommendations based on several factors: your current skill level (which you can specify), the technologies you're already familiar with, your project requirements (performance needs, team size, budget), and your learning preferences (video tutorials, documentation, hands-on projects). The more you interact with NEXUS, the better it can tailor its advice.</p>
                     </div>
                 </div>
-                
                 <div class="faq-item">
                     <div class="faq-question">
                         <span>Can NEXUS help with debugging specific code?</span>
@@ -1892,7 +2010,6 @@
                         <p>Yes! You can share your code snippets with NEXUS (either by pasting or uploading files) and it will analyze the code for errors, suggest improvements, explain potential issues, and provide corrected versions. NEXUS can help with syntax errors, logical bugs, performance issues, and security vulnerabilities across many programming languages.</p>
                     </div>
                 </div>
-                
                 <div class="faq-item">
                     <div class="faq-question">
                         <span>How accurate are NEXUS's recommendations?</span>
@@ -1902,16 +2019,7 @@
                         <p>NEXUS's recommendations are based on industry best practices, current trends, and analysis of successful projects. While we strive for high accuracy, technology choices often depend on specific contexts. NEXUS will explain the reasoning behind recommendations so you can make informed decisions. We recommend cross-referencing with other sources for critical decisions.</p>
                     </div>
                 </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Is there a mobile app for NEXUS?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Currently, NEXUS is available as a web application that works well on mobile browsers. We're developing native mobile apps for iOS and Android that will include additional features like offline access to your saved roadmaps and notifications for new learning content. The mobile apps are expected to launch later this year.</p>
-                    </div>
-                </div>
+                <!-- Add more faq-item blocks as needed -->
             </div>
         </section>
     </main>
@@ -2172,6 +2280,29 @@
                 }
               });
             });
+          });
+        });
+
+        document.querySelectorAll('.faq-question').forEach(q => {
+          q.addEventListener('click', function() {
+            const item = this.parentElement;
+            // Close others
+            document.querySelectorAll('.faq-item').forEach(i => {
+              if (i !== item) i.classList.remove('active');
+            });
+            // Toggle this one
+            item.classList.toggle('active');
+          });
+        });
+
+        document.querySelectorAll('.roadmap-tab').forEach(tab => {
+          tab.addEventListener('click', function() {
+            // Remove active from all tabs and contents
+            document.querySelectorAll('.roadmap-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.roadmap-content').forEach(c => c.classList.remove('active'));
+            // Activate this tab and its content
+            this.classList.add('active');
+            document.querySelector('.roadmap-content[data-tab="' + this.getAttribute('data-tab') + '"]').classList.add('active');
           });
         });
     </script>
