@@ -225,7 +225,7 @@
             padding: 2rem;
         }
 
-        /* Hero section */
+        /* Hero Section */
         .hero {
             position: relative;
             padding: 6rem 2rem;
@@ -360,35 +360,9 @@
             letter-spacing: 1px;
         }
 
-        /* Features section */
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .section-title:after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: var(--primary-gradient);
-            margin: 1rem auto 0;
-            border-radius: 2px;
-        }
-
-        .section-subtitle {
-            color: var(--text-secondary);
-            font-size: 1.125rem;
-            max-width: 600px;
-            margin: 0 auto;
+        /* Features Section */
+        .features-section {
+            margin-bottom: 5rem;
         }
 
         .features-grid {
@@ -483,7 +457,7 @@
             gap: 0.75rem;
         }
 
-        /* Roadmaps section */
+        /* Roadmaps Section */
         .roadmaps-section {
             margin-bottom: 5rem;
         }
@@ -678,7 +652,7 @@
             margin-bottom: 0;
         }
 
-        /* Chat section */
+        /* Chat Section */
         .chat-section {
             display: grid;
             grid-template-columns: 1fr 400px;
@@ -965,7 +939,7 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* FAQ section */
+        /* FAQ Section */
         .faq-section {
             margin-bottom: 5rem;
         }
@@ -1291,11 +1265,81 @@
             from { transform: scale(0.9); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
+
+        .course-card {
+            background: #1e293b;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(67, 97, 238, 0.10);
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .course-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(76, 201, 240, 0.15);
+        }
+        .course-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .course-provider {
+            color: #4cc9f0;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .course-meta {
+            font-size: 0.95rem;
+            color: #a5b4fc;
+            margin-bottom: 0.5rem;
+        }
+        .course-description {
+            color: #cbd5e1;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        .course-link {
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            color: #fff;
+            border-radius: 8px;
+            padding: 0.5rem 1.2rem;
+            text-decoration: none;
+            font-weight: 600;
+            align-self: flex-start;
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 2px 8px rgba(67, 97, 238, 0.10);
+        }
+        .course-link:hover {
+            background: linear-gradient(135deg, #3a0ca3 0%, #4361ee 100%);
+            transform: translateY(-2px) scale(1.04);
+        }
+
+        .filter-btn {
+          background: #1e293b;
+          color: #4cc9f0;
+          border: none;
+          border-radius: 20px;
+          padding: 0.5rem 1.5rem;
+          font-weight: 600;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+          box-shadow: 0 2px 8px rgba(67, 97, 238, 0.10);
+        }
+        .filter-btn.active,
+        .filter-btn:hover {
+          background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+          color: #fff;
+          box-shadow: 0 4px 16px rgba(67, 97, 238, 0.15);
+        }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header>
+    <header style="position: relative;">
         <div class="header-container">
             <div class="logo-container">
                 <div class="logo">
@@ -1310,6 +1354,7 @@
                     <li><a href="#roadmaps" class="nav-link">Roadmaps</a></li>
                     <li><a href="#chat" class="nav-link">Chat</a></li>
                     <li><a href="#faq" class="nav-link">FAQ</a></li>
+                    <li><a href="/courses" class="nav-link">Courses</a></li>
                 </ul>
             </nav>
             
@@ -1317,10 +1362,15 @@
                 <button class="theme-toggle" id="theme-toggle">
                     <i class="fas fa-moon"></i>
                 </button>
-                <a href="#chat" class="cta-button">
-                    Try Now
-                    <i class="fas fa-arrow-right"></i>
-                </a>
+                <div class="profile-bar" style="display: flex; align-items: center; gap: 0.75rem; margin-left: 1rem;">
+                    <div style="background: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
+                                width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-user" style="color: #fff; font-size: 1.2rem;"></i>
+                    </div>
+                    <span style="color: #4361ee; font-weight: 600; font-size: 1rem; letter-spacing: 0.5px;">
+                        {{ username|capitalize }}
+                    </span>
+                </div>
             </div>
         </div>
     </header>
@@ -1586,6 +1636,130 @@
             </div>
         </section>
 
+        <!-- Start of Courses Section -->
+        <section id="courses" style="padding: 3rem 0; background: #0f172a;">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+                <h2 style="color: #4cc9f0; font-family: 'Poppins',sans-serif; font-size: 2.2rem; font-weight: 700; text-align: center; margin-bottom: 2.5rem;">
+                    <i class="fas fa-certificate"></i> Free Certificate Courses
+                </h2>
+                <p style="text-align:center; color:#94a3b8; margin-bottom:2.5rem;">
+                    Curated from <a href="https://panx.io/awesome-certificates/" target="_blank" style="color:#4cc9f0;">Awesome Certificates</a> — all courses are free and offer a certificate or badge upon completion.
+                </p>
+
+                <!-- Filter Buttons -->
+                <div id="course-filters" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 2.5rem;">
+                    <button class="filter-btn active" data-category="all">All</button>
+                    <button class="filter-btn" data-category="security">Security</button>
+                    <button class="filter-btn" data-category="frontend">Front-End</button>
+                    <button class="filter-btn" data-category="backend">Back-End</button>
+                    <button class="filter-btn" data-category="datascience">Data Science</button>
+                    <button class="filter-btn" data-category="business">Business</button>
+                    <button class="filter-btn" data-category="design">Design</button>
+                    <button class="filter-btn" data-category="cloud">Cloud</button>
+                    <button class="filter-btn" data-category="devops">DevOps</button>
+                    <button class="filter-btn" data-category="ai">AI & ML</button>
+                </div>
+
+                <!-- Courses Grid -->
+                <div id="courses-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+                    <!-- Example Course Card (repeat for each course, add data-category attribute) -->
+                    <!-- Security -->
+                    <div class="course-card" data-category="security">
+                        <div class="course-title">Intro to Cybersecurity</div>
+                        <div class="course-provider">Cisco Networking Academy</div>
+                        <div class="course-meta">Beginner &bull; 15 hours &bull; 🏅 Badge</div>
+                        <div class="course-description">Learn the basics of cybersecurity and how to protect networks and systems.</div>
+                        <a class="course-link" href="https://www.netacad.com/courses/cybersecurity/introduction-cybersecurity" target="_blank">Go to Course</a>
+                    </div>
+                    <div class="course-card" data-category="security">
+                        <div class="course-title">Cybersecurity Essentials</div>
+                        <div class="course-provider">Cisco Networking Academy</div>
+                        <div class="course-meta">Intermediate &bull; 30 hours &bull; 🏅 Badge</div>
+                        <div class="course-description">Intermediate cybersecurity skills for protecting digital assets.</div>
+                        <a class="course-link" href="https://www.netacad.com/courses/cybersecurity/cybersecurity-essentials" target="_blank">Go to Course</a>
+                    </div>
+                    <!-- Front-End -->
+                    <div class="course-card" data-category="frontend">
+                        <div class="course-title">Responsive Web Design Certification</div>
+                        <div class="course-provider">FreeCodeCamp</div>
+                        <div class="course-meta">Professional &bull; 300 hours &bull; 🏆 Certificate</div>
+                        <div class="course-description">Learn HTML, CSS, and responsive design principles to build modern websites.</div>
+                        <a class="course-link" href="https://www.freecodecamp.org/learn/2022/responsive-web-design/" target="_blank">Go to Course</a>
+                    </div>
+                    <div class="course-card" data-category="frontend">
+                        <div class="course-title">Front-End Libraries Certification</div>
+                        <div class="course-provider">FreeCodeCamp</div>
+                        <div class="course-meta">Professional &bull; 300 hours &bull; 🏆 Certificate</div>
+                        <div class="course-description">Master front-end libraries like React, Redux, Bootstrap, jQuery, and SASS.</div>
+                        <a class="course-link" href="https://www.freecodecamp.org/learn/front-end-development-libraries/" target="_blank">Go to Course</a>
+                    </div>
+                    <!-- Back-End -->
+                    <div class="course-card" data-category="backend">
+                        <div class="course-title">Back End Development and APIs Certification</div>
+                        <div class="course-provider">FreeCodeCamp</div>
+                        <div class="course-meta">Professional &bull; 300 hours &bull; 🏆 Certificate</div>
+                        <div class="course-description">Learn to build APIs and back-end applications with Node.js and Express.</div>
+                        <a class="course-link" href="https://www.freecodecamp.org/learn/back-end-development-and-apis/" target="_blank">Go to Course</a>
+                    </div>
+                    <div class="course-card" data-category="backend">
+                        <div class="course-title">MongoDB Basics</div>
+                        <div class="course-provider">MongoDB University</div>
+                        <div class="course-meta">Beginner &bull; 8.5 hours &bull; 🏆 Certificate</div>
+                        <div class="course-description">Learn the fundamentals of MongoDB and NoSQL database management.</div>
+                        <a class="course-link" href="https://university.mongodb.com/courses/M001/about" target="_blank">Go to Course</a>
+                    </div>
+                    <!-- Data Science -->
+                    <div class="course-card" data-category="datascience">
+                        <div class="course-title">Data Science Professional Certificate</div>
+                        <div class="course-provider">IBM</div>
+                        <div class="course-meta">Beginner &bull; 100 hours &bull; 🏆 Certificate</div>
+                        <div class="course-description">Master data science skills and tools with hands-on projects.</div>
+                        <a class="course-link" href="https://www.coursera.org/professional-certificates/ibm-data-science" target="_blank">Go to Course</a>
+                    </div>
+                    <!-- Business -->
+                    <div class="course-card" data-category="business">
+                        <div class="course-title">Digital Marketing</div>
+                        <div class="course-provider">Google</div>
+                        <div class="course-meta">Beginner &bull; 40 hours &bull; 🏅 Badge</div>
+                        <div class="course-description">Master the basics of digital marketing with Google's free course and earn a badge.</div>
+                        <a class="course-link" href="https://learndigital.withgoogle.com/digitalgarage/course/digital-marketing" target="_blank">Go to Course</a>
+                    </div>
+                    <!-- Design -->
+                    <div class="course-card" data-category="design">
+                        <div class="course-title">Adobe Photoshop</div>
+                        <div class="course-provider">Mind Luster</div>
+                        <div class="course-meta">Beginner &bull; 1.4 hours &bull; 🏆 Certificate</div>
+                        <div class="course-description">Learn the basics of Adobe Photoshop and earn a certificate upon completion.</div>
+                        <a class="course-link" href="https://www.mindluster.com/certificate/1568/Adobe-Photoshop" target="_blank">Go to Course</a>
+                    </div>
+                    <!-- Cloud -->
+                    <div class="course-card" data-category="cloud">
+                        <div class="course-title">AWS Cloud Practitioner Essentials</div>
+                        <div class="course-provider">Amazon</div>
+                        <div class="course-meta">Beginner &bull; 6 hours &bull; 🏅 Badge</div>
+                        <div class="course-description">Learn the basics of AWS Cloud and cloud computing concepts.</div>
+                        <a class="course-link" href="https://www.aws.training/Details/Curriculum?id=20685" target="_blank">Go to Course</a>
+                    </div>
+                    <!-- DevOps -->
+                    <div class="course-card" data-category="devops">
+                        <div class="course-title">DevOps Essentials</div>
+                        <div class="course-provider">Linux Academy</div>
+                        <div class="course-meta">Beginner &bull; 10 hours &bull; 🏆 Certificate</div>
+                        <div class="course-description">Learn the basics of DevOps, CI/CD, and automation.</div>
+                        <a class="course-link" href="https://linuxacademy.com/course/devops-essentials/" target="_blank">Go to Course</a>
+                    </div>
+                    <!-- AI & ML -->
+                    <div class="course-card" data-category="ai">
+                        <div class="course-title">Machine Learning</div>
+                        <div class="course-provider">Coursera (Andrew Ng)</div>
+                        <div class="course-meta">Beginner &bull; 60 hours &bull; 🏆 Certificate</div>
+                        <div class="course-description">Learn the foundations of machine learning and AI from Andrew Ng.</div>
+                        <a class="course-link" href="https://www.coursera.org/learn/machine-learning" target="_blank">Go to Course</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Chat Section -->
         <section class="chat-section" id="chat">
             <div class="chat-info">
@@ -1816,7 +1990,22 @@
         </div>
     </footer>
 
-    
+    <div style="text-align:center; margin: 2rem 0;">
+        <form action="{{ url_for('logout') }}" method="get" style="display:inline;">
+            <button type="submit"
+                style="background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+                       color: #fff; 
+                       padding: 0.75rem 2rem; 
+                       border-radius: 8px; 
+                       font-weight: 600; 
+                       border: none;
+                       box-shadow: 0 4px 24px rgba(0,0,0,0.1); 
+                       cursor: pointer;
+                       transition: background 0.2s, transform 0.2s;">
+                Logout
+            </button>
+        </form>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -1964,8 +2153,27 @@
             // Focus input on page load
             userInput.focus();
         });
-    </script>
 
-    
+        document.addEventListener('DOMContentLoaded', function() {
+          const filterButtons = document.querySelectorAll('.filter-btn');
+          const courseCards = document.querySelectorAll('.course-card');
+
+          filterButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+              // Remove active from all
+              filterButtons.forEach(b => b.classList.remove('active'));
+              this.classList.add('active');
+              const category = this.getAttribute('data-category');
+              courseCards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                  card.style.display = '';
+                } else {
+                  card.style.display = 'none';
+                }
+              });
+            });
+          });
+        });
+    </script>
 </body>
 </html>

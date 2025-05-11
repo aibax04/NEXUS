@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register | NEXUS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .register-container {
+            background: #1e293b;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(67, 97, 238, 0.15);
+            padding: 2.5rem 2rem 2rem 2rem;
+            width: 100%;
+            max-width: 370px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .register-logo {
+            background: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 12px rgba(76, 201, 240, 0.15);
+        }
+        .register-logo i {
+            color: #fff;
+            font-size: 2rem;
+        }
+        h2 {
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        input {
+            padding: 0.85rem 1rem;
+            border-radius: 10px;
+            border: 1.5px solid #334155;
+            background: #273449;
+            color: #f1f5f9;
+            font-size: 1rem;
+            outline: none;
+            transition: border 0.2s;
+        }
+        input:focus {
+            border: 1.5px solid #4cc9f0;
+        }
+        button {
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 0.85rem 1rem;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(67, 97, 238, 0.10);
+            transition: background 0.2s, transform 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #3a0ca3 0%, #4361ee 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .register-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.97rem;
+        }
+        .register-footer a {
+            color: #4cc9f0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .register-footer a:hover {
+            color: #4361ee;
+            text-decoration: underline;
+        }
+        ul {
+            margin: 1rem 0 0 0;
+            padding: 0;
+            list-style: none;
+            color: #f87171;
+            text-align: center;
+        }
+        @media (max-width: 480px) {
+            .register-container {
+                padding: 1.5rem 0.5rem 1rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-logo">
+            <i class="fas fa-user-plus"></i>
+        </div>
+        <h2>Create your account</h2>
+        <form method="POST">
+            <input name="username" placeholder="Username" required>
+            <input name="password" type="password" placeholder="Password" required>
+            <button type="submit">Register</button>
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <ul>
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
+        </form>
+        <div class="register-footer">
+            Already have an account?
+            <a href="{{ url_for('login') }}">Login</a>
+        </div>
+    </div>
+</body>
+</html>
